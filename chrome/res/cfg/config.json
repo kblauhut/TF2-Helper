@@ -1,0 +1,21 @@
+{
+  "colors": {
+    "prem": "#EB4B4B",
+    "div1": "#D32CE6",
+    "div2": "#8847FF",
+    "div3": "#5647ff",
+    "mid": "#4B69FF",
+    "low": "#5E98D9",
+    "open": "#B0C3D9",
+    "null": "#D5D5D5"
+  },
+  "querystrings": {
+    "players": "ym-gl playerSlot lobbySlot filled",
+    "slots": "ym-gl playerSlot lobbySlot"
+  },
+  "settings": {
+    "region": "eu",
+    "divTags": true,
+    "nameSubstitution": true
+  }
+}

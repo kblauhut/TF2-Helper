@@ -1,0 +1,45 @@
+{
+  "manifest_version": 2,
+  "name": "TF2Center Helper",
+  "description": "TF2Center ETF2L and RGL division integration.",
+  "version": "0.9",
+  "permissions": [
+    "declarativeContent",
+    "storage",
+    "http://api.etf2l.org/*",
+    "https://api.etf2l.org/*",
+    "https://rgl.gg/Public/API/v1/*"
+  ],
+  "web_accessible_resources": [
+    "res/css/divTag.css"
+  ],
+  "background": {
+    "scripts": [
+      "background.js",
+      "bgrequests.js"
+    ],
+    "persistent": true
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://tf2center.com/lobbies/*",
+        "http://tf2center.com/lobbies/*"
+      ],
+      "js": [
+        "src/contentscripts/main.js"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "browser_action": {
+    "default_popup": "src/popup/popup.html",
+    "default_icon": {}
+  },
+  "content_security_policy": "script-src 'self' https://maxcdn.bootstrapcdn.com/ https://ajax.googleapis.com/; object-src 'self'",
+  "icons": {
+    "16": "/res/images/icon16.png",
+    "48": "/res/images/icon48.png",
+    "128": "/res/images/icon128.png"
+  }
+}

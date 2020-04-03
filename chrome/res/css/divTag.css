@@ -1,0 +1,20 @@
+.etf2lDivTag {
+  color: black;
+  text-decoration: none;
+  background-color: white;
+
+  margin-left: -7px;
+  padding: 0.15em 4px;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 18px;
+  text-align: center;
+  border-radius: 2px;
+  box-shadow: inset 0 -1px 0 rgba(30, 30, 30, 0.1);
+  font-family: "Roboto", "Noto", sans-serif;
+  position: relative;
+  top: 25%;
+  min-width: 34px;
+  display: table;
+  margin: 0 auto;
+}
