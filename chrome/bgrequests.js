@@ -147,28 +147,28 @@ function etf2lUserData(id) {
           (clan1.was_in_team == 1 || clan2.was_in_team == 1)
         ) {
           if (tierName.includes("Prem")) {
-            return "ETF2L-PREM";
+            return "etf2l_prem";
           }
           if (tierName.includes("Division 1")) {
-            return "ETF2L-DIV1";
+            return "etf2l_div1";
           }
           if (tierName.includes("High")) {
-            return "ETF2L-DIV1";
+            return "etf2l_div1";
           }
           if (tierName.includes("Division 2")) {
-            return "ETF2L-DIV2";
+            return "etf2l_div2";
           }
           if (tierName.includes("Division 3")) {
-            return "ETF2L-DIV3";
+            return "etf2l_div3";
           }
           if (tierName.includes("Mid")) {
-            return "ETF2L-MID";
+            return "etf2l_mid";
           }
           if (tierName.includes("Low")) {
-            return "ETF2L-LOW";
+            return "etf2l_low";
           }
           if (tierName.includes("Open")) {
-            return "ETF2L-OPEN";
+            return "etf2l_open";
           }
         } else if (
           category.includes("6v6 Season") &&
@@ -176,28 +176,28 @@ function etf2lUserData(id) {
           (clan1.was_in_team == 1 || clan2.was_in_team == 1)
         ) {
           if (competitionName.includes("Prem")) {
-            return "ETF2L-PREM";
+            return "etf2l_prem";
           }
           if (competitionName.includes("Division 1")) {
-            return "ETF2L-DIV1";
+            return "etf2l_div1";
           }
           if (competitionName.includes("High")) {
-            return "ETF2L-DIV1";
+            return "etf2l_div1";
           }
           if (competitionName.includes("Division 2")) {
-            return "ETF2L-DIV2";
+            return "etf2l_div2";
           }
           if (competitionName.includes("Division 3")) {
-            return "ETF2L-DIV3";
+            return "etf2l_div3";
           }
           if (competitionName.includes("Mid")) {
-            return "ETF2L-MID";
+            return "etf2l_mid";
           }
           if (competitionName.includes("Low")) {
-            return "ETF2L-LOW";
+            return "etf2l_low";
           }
           if (competitionName.includes("Open")) {
-            return "ETF2L-OPEN";
+            return "etf2l_open";
           }
         }
       }

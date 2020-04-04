@@ -91,31 +91,31 @@ function updateUser(targetElement, div, id) {
   }
 
   switch (div) {
-    case "ETF2L-PREM":
+    case "etf2l_prem":
       tag.style.background = colors.prem;
       tag.innerText = "PREM";
       break;
-    case "ETF2L-DIV1":
+    case "etf2l_div1":
       tag.style.background = colors.div1;
       tag.innerText = "DIV1";
       break;
-    case "ETF2L-DIV2":
+    case "etf2l_div2":
       tag.style.background = colors.div2;
       tag.innerText = "DIV2";
       break;
-    case "ETF2L-DIV3":
+    case "etf2l_div3":
       tag.style.background = colors.div3;
       tag.innerText = "DIV3";
       break;
-    case "ETF2L-MID":
+    case "etf2l_mid":
       tag.style.background = colors.mid;
       tag.innerText = "MID";
       break;
-    case "ETF2L-LOW":
+    case "etf2l_low":
       tag.style.background = colors.low;
       tag.innerText = "LOW";
       break;
-    case "ETF2L-OPEN":
+    case "etf2l_open":
       tag.style.background = colors.open;
       tag.innerText = "OPEN";
       break;
@@ -143,10 +143,21 @@ function updateUser(targetElement, div, id) {
       tag.style.background = colors.open;
       tag.innerText = "RGL-N";
       break;
-    case null:
+    case "esea_inv":
+      tag.style.background = colors.prem;
+      tag.innerText = "ESEA-I";
+      break;
+    case "esea_im":
+      tag.style.background = colors.div1;
+      tag.innerText = "ESEA-IM";
+      break;
+    case "esea_open":
+      tag.style.background = colors.div2;
+      tag.innerText = "ESEA-O";
+      break;
+    default:
       tag.style.background = colors.null;
       tag.innerText = "NEW";
-      break;
   }
 }
 

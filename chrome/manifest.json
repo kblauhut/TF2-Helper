@@ -8,7 +8,8 @@
     "storage",
     "http://api.etf2l.org/*",
     "https://api.etf2l.org/*",
-    "https://rgl.gg/Public/API/v1/*"
+    "https://rgl.gg/Public/API/v1/*",
+    "https://raw.githubusercontent.com/*"
   ],
   "web_accessible_resources": [
     "res/css/divTag.css"
