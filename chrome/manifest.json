@@ -1,8 +1,8 @@
 {
   "manifest_version": 2,
-  "name": "TF2Center Helper",
-  "description": "TF2Center ETF2L and RGL division integration.",
-  "version": "0.9",
+  "name": "TF2 Helper",
+  "description": "Some useful tools for competitive TF2 players.",
+  "version": "0.91",
   "permissions": [
     "declarativeContent",
     "storage",
@@ -28,7 +28,17 @@
         "http://tf2center.com/lobbies/*"
       ],
       "js": [
-        "src/contentscripts/main.js"
+        "src/contentscripts/lobby.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "http://logs.tf/*",
+        "https://logs.tf/*"
+      ],
+      "js": [
+        "src/contentscripts/logs.js"
       ],
       "run_at": "document_end"
     }
