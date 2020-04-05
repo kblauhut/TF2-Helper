@@ -60,7 +60,6 @@ function updateUser(targetElement, div, id) {
             tag.setAttribute("href", href);
             tag.setAttribute("target", "_blank");
         }
-        console.log(targetElement);
 
         targetElement.appendChild(tag);
         tag.style.color = "black";
