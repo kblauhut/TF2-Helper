@@ -9,8 +9,8 @@ chrome.storage.sync.get(["colors", "querystrings", "settings"], function (
   colors = result.colors;
   settings = result.settings;
   querystrings = result.querystrings;
-  let players = document.getElementsByClassName(querystrings.players);
-  let slots = document.getElementsByClassName(querystrings.slots);
+  let blu = document.getElementsByClassName(querystrings.blu);
+  let red = document.getElementsByClassName(querystrings.red);
 
   if (settings.divTags) {
     let style = document.createElement("link");
@@ -18,35 +18,34 @@ chrome.storage.sync.get(["colors", "querystrings", "settings"], function (
     style.type = "text/css";
     style.href = chrome.extension.getURL("res/css/divTag.css");
     document.head.appendChild(style);
-    updatePlayers(players);
-    for (let i = 0; i < slots.length; i++) {
-      addMutationObserver(slots[i]);
-    }
+    updatePlayers(blu[0].getElementsByClassName(querystrings.players), querystrings.blu);
+    updatePlayers(red[0].getElementsByClassName(querystrings.players), querystrings.red);
+    addMutationObserver(blu[0]);
+    addMutationObserver(red[0]);
   }
 });
 
 function addMutationObserver(target) {
-  console.log(target);
-
   let config = {
-    attributes: true,
-    attributeFilter: ['class'],
-    childList: false,
-    characterData: true,
-    attributeOldValue: true
+    childList: true,
   };
 
   let observer = new MutationObserver(function (mutations) {
     mutations.forEach(function (mutation) {
-      console.log("ya");
+      if (mutation.addedNodes[0] != undefined) {
+        updatePlayers(target.getElementsByClassName(querystrings.players), target.className)
+      }
     });
   });
   observer.observe(target, config);
 }
 
-function updatePlayers(players) {
+function updatePlayers(players, team) {
   let idArray = getIds(players);
   let port = chrome.runtime.connect({ name: region });
+  let prepend = false;
+  if (team == querystrings.blu) prepend = true;
+
   port.postMessage({ idArray: idArray });
   port.onMessage.addListener(function (msg) {
     for (let i = 0; i < players.length; i++) {
@@ -59,10 +58,11 @@ function updatePlayers(players) {
             updateUser(
               players[i].parentElement,
               msg.user.data.division,
-              msg.user.data.etf2lID
+              msg.user.data.etf2lID,
+              prepend
             );
           } else {
-            updateUser(players[i].parentElement, null, null);
+            updateUser(players[i].parentElement, null, null, prepend);
           }
         }
       }
@@ -70,7 +70,7 @@ function updatePlayers(players) {
   });
 }
 
-function updateUser(targetElement, div, id) {
+function updateUser(targetElement, div, id, prepend) {
   let tag = targetElement.getElementsByClassName("etf2lDivTag")[0];
   let href = null;
   if (id != null) href = "http://etf2l.org/forum/user/" + id;
@@ -81,7 +81,11 @@ function updateUser(targetElement, div, id) {
       tag.setAttribute("href", href);
       tag.setAttribute("target", "_blank");
     }
-    targetElement.firstElementChild.appendChild(tag);
+    if (prepend) {
+      targetElement.getElementsByClassName("statsContainer")[0].prepend(tag);
+    } else {
+      targetElement.getElementsByClassName("statsContainer")[0].appendChild(tag);
+    }
     tag.style.color = "black";
   } else {
     tag.removeAttribute("href");

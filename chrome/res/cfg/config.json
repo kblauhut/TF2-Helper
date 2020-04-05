@@ -11,7 +11,8 @@
   },
   "querystrings": {
     "players": "ym-gl playerSlot lobbySlot filled",
-    "slots": "ym-gl playerSlot lobbySlot"
+    "blu": "blue-team",
+    "red": "red-team"
   },
   "settings": {
     "region": "eu",
