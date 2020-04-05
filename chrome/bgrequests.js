@@ -53,6 +53,17 @@ async function returnData(id, port) {
       if (userData.registered == false || userData.data.division == null)
         userData = await etf2lUserData(id);
     }
+
+    if (userData.registered == false) {
+      userData = {
+        id: id,
+        data: { division: null },
+        registered: false
+      }
+    }
+
+    userData.data.division = specialGamers(id, userData.data.division);
+
     requestQueue.splice(requestQueue.indexOf(id), 1);
     userDataCache.push(userData);
     port.postMessage({ user: userData });
@@ -355,4 +366,9 @@ function ozfUserData(id) {
     }
     return null;
   }
+}
+
+function specialGamers(id, division) {
+  if (id == "76561198046711192") return "special_gamer";
+  return division;
 }

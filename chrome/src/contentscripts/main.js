@@ -159,6 +159,11 @@ function updateUser(targetElement, div, id, prepend) {
       tag.style.background = colors.div2;
       tag.innerText = "ESEA-O";
       break;
+    case "special_gamer": {
+      tag.style.background = "linear-gradient(153deg, rgba(227,21,223,1) 0%, rgba(95,97,206,1) 51%, rgba(0,212,255,1) 100%)";
+      tag.innerText = "DIV1";
+      break;
+    }
     default:
       tag.style.background = colors.null;
       tag.innerText = "NEW";
