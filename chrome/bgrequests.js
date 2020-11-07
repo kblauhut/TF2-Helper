@@ -31,7 +31,7 @@ async function returnData(id, port) {
     if (port.name == "eu") {
       userData = await etf2lUserData(id);
       if (userData.registered == false || userData.data.division == null)
-        userData = await rglUserData(id);
+      userData = await rglUserData(id);
       if (userData.registered == false || userData.data.division == null)
         userData = await eseaUserData(id);
       // if (userData.registered == false || userData.data.division == null)
@@ -39,31 +39,20 @@ async function returnData(id, port) {
     } else if (port.name == "na") {
       userData = await rglUserData(id);
       if (userData.registered == false || userData.data.division == null)
-        userData = await eseaUserData(id);
+      userData = await eseaUserData(id);
       if (userData.registered == false || userData.data.division == null)
         userData = await etf2lUserData(id);
       // if (userData.registered == false || userData.data.division == null)
       //   userData = await ozfUserData(id);
     } else {
       // userData = await ozfUserData(id);
+      //if (userData.registered == false || userData.data.division == null)
+      userData = await rglUserData(id);
       if (userData.registered == false || userData.data.division == null)
-        userData = await rglUserData(id);
-      if (userData.registered == false || userData.data.division == null)
-        userData = await eseaUserData(id);
+      userData = await eseaUserData(id);
       if (userData.registered == false || userData.data.division == null)
         userData = await etf2lUserData(id);
     }
-
-    if (userData.registered == false) {
-      userData = {
-        id: id,
-        data: { division: null },
-        registered: false
-      }
-    }
-
-    userData.data.division = specialGamers(id, userData.data.division);
-
     requestQueue.splice(requestQueue.indexOf(id), 1);
     userDataCache.push(userData);
     port.postMessage({ user: userData });
@@ -220,21 +209,16 @@ function etf2lUserData(id) {
 function rglUserData(id) {
   return new Promise(async resolve => {
     console.log("Getting RGL data for " + id);
-    let userURL = "https://rgl.gg/Public/API/v1/PlayerHistory.aspx?s=" + id;
+    let userURL = "https://payload.tf/api/rgl/" + id;
     let userJSON = JSON.parse(
       await fetch(userURL)
         .then(response => {
           return response.text();
         })
-        .then(html => {
-          const document = new DOMParser().parseFromString(html, "text/html");
-          return document.querySelector("#lblOutput").innerText;
-        })
     );
-    if (userJSON && userJSON[0]) {
-      let playerObj = userJSON[0];
-      let name = playerObj.CurrentAlias;
-      let division = getDiv(playerObj);
+    if (userJSON.message != "Player does not exist in RGL") {
+      let name = userJSON.name;
+      let division = getDiv(userJSON);
       userData = {
         id: id,
         league: "rgl",
@@ -250,28 +234,28 @@ function rglUserData(id) {
   function getDiv(playerObj) {
     if (
       playerObj &&
-      playerObj.PlayerHistory &&
-      playerObj.PlayerHistory.length > 0
+      playerObj.experience &&
+      playerObj.experience.length > 0
     ) {
-      for (const entry of playerObj.PlayerHistory) {
-        if (entry.RegionName.includes("Traditional Sixes")) {
-          const divName = entry.GroupName;
-          if (divName.includes("Invite")) {
+      for (const entry of playerObj.experience) {
+        if (entry.category.includes("trad. sixes")) {
+          const divName = entry.div;
+          if (divName.includes("invite")) {
             return "rgl_inv";
           }
-          if (divName.includes("Advanced")) {
+          if (divName.includes("advanced")) {
             return "rgl_adv";
           }
-          if (divName.includes("Main")) {
+          if (divName.includes("main")) {
             return "rgl_main";
           }
-          if (divName.includes("Intermediate")) {
+          if (divName.includes("intermediate")) {
             return "rgl_im";
           }
-          if (divName.includes("Open")) {
+          if (divName.includes("open")) {
             return "rgl_open";
           }
-          if (divName.includes("Newcomer")) {
+          if (divName.includes("newcomer")) {
             return "rgl_new";
           }
         }
@@ -366,9 +350,4 @@ function ozfUserData(id) {
     }
     return null;
   }
-}
-
-function specialGamers(id, division) {
-  if (id == "76561198046711192") return "special_gamer";
-  return division;
 }

@@ -2,13 +2,13 @@
   "manifest_version": 2,
   "name": "TF2 Helper",
   "description": "Some useful tools for competitive TF2 players.",
-  "version": "0.91",
+  "version": "0.92",
   "permissions": [
     "declarativeContent",
     "storage",
     "http://api.etf2l.org/*",
     "https://api.etf2l.org/*",
-    "https://rgl.gg/Public/API/v1/*",
+    "https://payload.tf/api/rgl/*",
     "https://raw.githubusercontent.com/*"
   ],
   "web_accessible_resources": [
