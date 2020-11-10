@@ -4,7 +4,6 @@
   "description": "Some useful tools for competitive TF2 players.",
   "version": "0.92",
   "permissions": [
-    "declarativeContent",
     "storage",
     "http://api.etf2l.org/*",
     "https://api.etf2l.org/*",
