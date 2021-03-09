@@ -210,7 +210,7 @@ function etf2lUserData(id) {
 function rglUserData(id) {
   return new Promise(async resolve => {
     console.log("Getting RGL data for " + id);
-    let userURL = "https://payload.tf/api/rgl/" + id;
+    let userURL = "https://payload.tf/api/external/rgl/" + id;
     let userJSON = JSON.parse(
       await fetch(userURL)
         .then(response => {
