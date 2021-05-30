@@ -63,10 +63,9 @@ async function returnData(idArray, port) {
 		}
 	}
 
-	for await (const profile of dataToReturn) {
-		userDataCache.set(profile.id, profile);
-		port.postMessage({ user: userData });
-	}
+	for (const profile of dataToReturn) userDataCache.set(profile.id, profile);
+
+	port.postMessage(dataToReturn);
 }
 
 // function userDataUpdated(id, userData) {
@@ -103,9 +102,9 @@ function etf2lUserData(id) {
 			let team = getTeam(resultJSON);
 			let division = getDiv(resultJSON);
 			userData = {
-				id: id,
+				id,
 				league: "etf2l",
-				data: { name: name, team: team, division: division, etf2lID: etf2lID },
+				data: { name, team, division, etf2lID },
 				registered: true
 			};
 		} else {
@@ -212,9 +211,8 @@ function etf2lUserData(id) {
 }
 
 function getRglDiv(profile) {
-	if (!profile?.experience?.length) return null;
-
-	switch (profile.experience[0]) {
+	console.log(profile?.experience[0]?.div)
+	switch (profile?.experience[0]?.div) {
 		case "invite": {
 			return "rgl_inv";
 		}
@@ -230,8 +228,15 @@ function getRglDiv(profile) {
 		case "open": {
 			return "rgl_open";
 		}
+		case "amateur": {
+			// ?????? lol
+			return "rgl_open";
+		}
 		case "newcomer": {
 			return "rgl_new";
+		}
+		default: {
+			return null;
 		}
 	}
 }
