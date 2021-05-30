@@ -45,18 +45,6 @@ function updatePlayers(players) {
 				}
 			}
 		}
-		// for (let i = 0; i < players.length; i++) {
-		// 	userID = players[i].getAttribute("id").substring(7);
-		// 	if (userID != null && userID != undefined) {
-		// 		if (data.user.id == userID) {
-		// 			if (msg.user.registered) {
-		// 				updateUser(players[i], data.user.data.division, data.user.data.etf2lID);
-		// 			} else {
-		// 				updateUser(players[i], null, null);
-		// 			}
-		// 		}
-		// 	}
-		// }
 	});
 }
 
