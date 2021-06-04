@@ -136,82 +136,56 @@ function etf2lUserData(id) {
 		return null;
 	}
 
-	function getDiv(resultJSON) {
-		if (resultJSON.results != null) {
-			for (let i = 0; i < resultJSON.results.length; i++) {
-				let tier = resultJSON.results[i].division.tier;
-				let tierName = resultJSON.results[i].division.name;
-				let competitionName = resultJSON.results[i].competition.name;
-				let category = resultJSON.results[i].competition.category;
-				let clan1 = resultJSON.results[i].clan1;
-				let clan2 = resultJSON.results[i].clan2;
-				if (
-					category.includes("6v6 Season") &&
-					tier != null &&
-					(clan1.was_in_team == 1 || clan2.was_in_team == 1)
-				) {
-					if (tierName.includes("Prem")) {
+	function getDiv(json) {
+		if (!json.results) return null;
+
+		for (const result of json.results) {
+			const tier = result.division.tier;
+			const tierName = result.division.name;
+			const competitionName = result.competition.name;
+			const category = result.competition.category;
+			const clan1 = result.clan1;
+			const clan2 = result.clan2;
+
+			// This if looks like aids... I know.
+			if (
+				tier &&
+				(category.includes("6v6 Season") ||
+					(category.includes("6v6 Season") && competitionName.includes("Playoffs"))) &&
+				(clan1.was_in_team == 1 || clan2.was_in_team == 1)
+			) {
+				switch (tierName) {
+					case tierName.includes("Prem"): {
 						return "etf2l_prem";
 					}
-					if (tierName.includes("Division 1")) {
+					case tierName.includes("Division 1"): {
 						return "etf2l_div1";
 					}
-					if (tierName.includes("High")) {
+					case tierName.includes("High"): {
 						return "etf2l_div1";
 					}
-					if (tierName.includes("Division 2")) {
+					case tierName.includes("Division 2"): {
 						return "etf2l_div2";
 					}
-					if (tierName.includes("Division 3")) {
+					case tierName.includes("Division 3"): {
 						return "etf2l_div3";
 					}
-					if (tierName.includes("Mid")) {
+					case tierName.includes("Mid"): {
 						return "etf2l_mid";
 					}
-					if (tierName.includes("Low")) {
+					case tierName.includes("Low"): {
 						return "etf2l_low";
 					}
-					if (tierName.includes("Open")) {
-						return "etf2l_open";
-					}
-				} else if (
-					category.includes("6v6 Season") &&
-					competitionName.includes("Playoffs") &&
-					(clan1.was_in_team == 1 || clan2.was_in_team == 1)
-				) {
-					if (competitionName.includes("Prem")) {
-						return "etf2l_prem";
-					}
-					if (competitionName.includes("Division 1")) {
-						return "etf2l_div1";
-					}
-					if (competitionName.includes("High")) {
-						return "etf2l_div1";
-					}
-					if (competitionName.includes("Division 2")) {
-						return "etf2l_div2";
-					}
-					if (competitionName.includes("Division 3")) {
-						return "etf2l_div3";
-					}
-					if (competitionName.includes("Mid")) {
-						return "etf2l_mid";
-					}
-					if (competitionName.includes("Low")) {
-						return "etf2l_low";
-					}
-					if (competitionName.includes("Open")) {
+					case tierName.includes("Open"): {
 						return "etf2l_open";
 					}
 				}
 			}
-			return null;
 		}
 	}
 }
 
 function getRglDiv(profile) {
-	console.log(profile?.experience[0]?.div)
 	switch (profile?.experience[0]?.div) {
 		case "invite": {
 			return "rgl_inv";
@@ -261,6 +235,7 @@ async function rglUserData(profiles) {
 
 	return data.map(profile => {
 		const division = getRglDiv(profile);
+		console.log(`Name:${profile.name}\tDiv: ${division}`)
 
 		return {
 			id: profile.steamId,
