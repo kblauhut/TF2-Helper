@@ -7,7 +7,7 @@
     "storage",
     "http://api.etf2l.org/*",
     "https://api.etf2l.org/*",
-    "https://payload.tf/api/rgl/*",
+    "https://rgl.payload.tf/api/v1/profiles/*",
     "https://raw.githubusercontent.com/*"
   ],
   "web_accessible_resources": [
