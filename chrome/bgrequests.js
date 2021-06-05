@@ -210,13 +210,11 @@ function etf2lUserData(id) {
 function rglUserData(id) {
   return new Promise(async resolve => {
     console.log("Getting RGL data for " + id);
-    let userURL = "https://payload.tf/api/external/rgl/" + id;
-    let userJSON = JSON.parse(
-      await fetch(userURL)
-        .then(response => {
-          return response.text();
-        })
-    );
+
+    const apiUrl = `https://rgl.payload.tf/api/v1/profiles/${id}/experience?formats=sixes?disableCache=true`;
+    const req = await fetch(apiUrl);
+    const { data: userJSON } = await req.json();
+    
     if (userJSON.message != "Player does not exist in RGL") {
       let name = userJSON.name;
       let division = getDiv(userJSON);
@@ -233,36 +231,17 @@ function rglUserData(id) {
   });
 
   function getDiv(playerObj) {
-    if (
-      playerObj &&
-      playerObj.experience &&
-      playerObj.experience.length > 0
-    ) {
-      for (const entry of playerObj.experience) {
-        if (entry.category.includes("trad. sixes")) {
-          const divName = entry.div;
-          if (divName.includes("invite")) {
-            return "rgl_inv";
-          }
-          if (divName.includes("advanced")) {
-            return "rgl_adv";
-          }
-          if (divName.includes("main")) {
-            return "rgl_main";
-          }
-          if (divName.includes("intermediate")) {
-            return "rgl_im";
-          }
-          if (divName.includes("open")) {
-            return "rgl_open";
-          }
-          if (divName.includes("newcomer")) {
-            return "rgl_new";
-          }
-        }
-      }
+    switch(playerObj?.experience?.[0].div) {
+      case "invite": return "rgl_inv"
+      case "div-2": return "rgl_adv"
+      case "div-1": return "rgl_adv"
+      case "advanced": return "rgl_adv"
+      case "main": return "rgl_main"
+      case "intermediate": return "rgl_im"
+      case "open": return "rgl_open"
+      case "newcomer": return "rgl_new"
+      default: return null
     }
-    return null;
   }
 }
 
