@@ -1,16 +1,17 @@
 name: Chrome Extension Publish
-on:
+'on':
   push:
     branches:
       - main
 jobs:
   build:
     runs-on: ubuntu-latest
-      steps:
-        - uses: trmcnvn/chrome-addon@v2
-          with:
-            extension: hempfdcmnnlkkikikbigiohaeicckmfe
-            zip: build/tf2helper.zip
-            client-id: ${{ secrets.CHROME_CLIENT_ID }}
-            client-secret: ${{ secrets.CHROME_CLIENT_SECRET }}
-            refresh-token: ${{ secrets.CHROME_REFRESH_TOKEN }}
+    steps:
+      - uses: trmcnvn/chrome-addon@v2
+        with:
+          extension: hempfdcmnnlkkikikbigiohaeicckmfe
+          zip: build/tf2helper.zip
+          client-id: '${{ secrets.CHROME_CLIENT_ID }}'
+          client-secret: '${{ secrets.CHROME_CLIENT_SECRET }}'
+          refresh-token: '${{ secrets.CHROME_REFRESH_TOKEN }}'
+
