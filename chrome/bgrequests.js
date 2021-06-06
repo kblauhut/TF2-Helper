@@ -1,6 +1,7 @@
-let userDataCache = [];
-let requestQueue = [];
-let openRequests = [];
+const userDataCache = new Map();
+const requestQueue = [];
+const openRequests = [];
+
 let eseaDivJSON;
 let ozfDivJSON;
 
@@ -13,18 +14,13 @@ chrome.runtime.onConnect.addListener(function (port) {
 });
 
 async function returnData(id, port) {
-  let cachedIDs = [];
   let userData;
-  let idPos;
 
-  for (let i = 0; i < userDataCache.length; i++) {
-    cachedIDs.push(userDataCache[i].id);
-  }
-  idPos = cachedIDs.indexOf(id);
+  const isCached = userDataCache.has(id);
 
-  if (idPos != -1) {
-    port.postMessage({ user: userDataCache[idPos] });
-  } else if (requestQueue.indexOf(id) != -1) {
+  if (isCached) return port.postMessage({ user: userDataCache.get(id) });
+  
+  if (requestQueue.indexOf(id) != -1) {
     openRequests.push({ id: id, port: port });
   } else if (requestQueue.indexOf(id) == -1) {
     requestQueue.push(id);
@@ -53,8 +49,10 @@ async function returnData(id, port) {
       if (userData.registered == false || userData.data.division == null)
         userData = await etf2lUserData(id);
     }
+    
     requestQueue.splice(requestQueue.indexOf(id), 1);
-    userDataCache.push(userData);
+    userDataCache.set(id, userData);
+
     port.postMessage({ user: userData });
     userDataUpdated(id, userData);
   }
