@@ -213,25 +213,29 @@ function rglUserData(id) {
 
     const apiUrl = `https://rgl.payload.tf/api/v1/profiles/${id}/experience?formats=sixes&disableCache=true`;
     const req = await fetch(apiUrl);
-    const { data: userJSON } = await req.json();
-    
-    if (userJSON.message != "Player does not exist in RGL") {
-      let name = userJSON.name;
-      let division = getDiv(userJSON);
-      userData = {
-        id: id,
-        league: "rgl",
-        data: { name: name, division: division },
-        registered: true
-      };
-    } else {
-      userData = { id: id, registered: false };
+
+    if (!req.ok) {
+      userData = { id, registered: false };
+      resolve(userData);
+      return;
     }
+
+    const { data: userJSON } = await req.json();
+    const name = userJSON.name;
+    const division = getDiv(userJSON);
+
+    userData = {
+      id: id,
+      league: "rgl",
+      data: { name: name, division: division },
+      registered: true
+    };
+
     resolve(userData);
   });
 
   function getDiv(playerObj) {
-    switch(playerObj?.experience?.[0].div) {
+    switch(playerObj?.experience?.[0]?.div) {
       case "invite": return "rgl_inv"
       case "div-2": return "rgl_adv"
       case "div-1": return "rgl_adv"
