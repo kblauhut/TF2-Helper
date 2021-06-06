@@ -51,7 +51,7 @@ async function returnData(id, port) {
     }
     
     requestQueue.splice(requestQueue.indexOf(id), 1);
-    userDataCache.set(id, userData);
+    userDataCache.add(id, userData);
 
     port.postMessage({ user: userData });
     userDataUpdated(id, userData);
