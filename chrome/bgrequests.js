@@ -1,4 +1,4 @@
-const userDataCache = new Map();
+const userDataCache = new Set();
 const requestQueue = [];
 const openRequests = [];
 
