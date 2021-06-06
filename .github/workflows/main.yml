@@ -2,7 +2,7 @@ name: Chrome Extension Publish
 'on':
   push:
     branches:
-      - main
+      - master
 jobs:
   build:
     runs-on: ubuntu-latest
