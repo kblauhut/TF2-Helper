@@ -4,13 +4,18 @@ name: Chrome Extension Publish
     branches:
       - master
 jobs:
-  build:
+  publish:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
+      - uses: papeloto/action-zip@v1
+        with:
+          files: chrome/
+          dest: tf2helper.zip
       - uses: trmcnvn/chrome-addon@v2
         with:
           extension: hempfdcmnnlkkikikbigiohaeicckmfe
-          zip: build/tf2helper.zip
+          zip: tf2helper.zip
           client-id: '${{ secrets.CHROME_CLIENT_ID }}'
           client-secret: '${{ secrets.CHROME_CLIENT_SECRET }}'
           refresh-token: '${{ secrets.CHROME_REFRESH_TOKEN }}'
