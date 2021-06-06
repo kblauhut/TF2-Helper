@@ -1,4 +1,4 @@
-const userDataCache = new Set();
+const userDataCache = new Map();
 const requestQueue = [];
 const openRequests = [];
 
@@ -51,7 +51,7 @@ async function returnData(id, port) {
     }
     
     requestQueue.splice(requestQueue.indexOf(id), 1);
-    userDataCache.add(id, userData);
+    userDataCache.set(id, userData);
 
     port.postMessage({ user: userData });
     userDataUpdated(id, userData);
