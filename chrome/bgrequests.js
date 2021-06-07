@@ -28,24 +28,12 @@ async function returnData(id, port) {
       userData = await etf2lUserData(id);
       if (userData.registered == false || userData.data.division == null)
         userData = await rglUserData(id);
-      //if (userData.registered == false || userData.data.division == null)
-      //userData = await eseaUserData(id);
-      // if (userData.registered == false || userData.data.division == null)
-      //   userData = await ozfUserData(id);
     } else if (port.name == "na") {
       userData = await rglUserData(id);
       if (userData.registered == false || userData.data.division == null)
-        //userData = await eseaUserData(id);
-        //if (userData.registered == false || userData.data.division == null)
         userData = await etf2lUserData(id);
-      // if (userData.registered == false || userData.data.division == null)
-      //   userData = await ozfUserData(id);
     } else {
-      // userData = await ozfUserData(id);
-      //if (userData.registered == false || userData.data.division == null)
       userData = await rglUserData(id);
-      //if (userData.registered == false || userData.data.division == null)
-      //userData = await eseaUserData(id);
       if (userData.registered == false || userData.data.division == null)
         userData = await etf2lUserData(id);
     }
