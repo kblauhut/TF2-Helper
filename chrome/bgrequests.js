@@ -51,7 +51,9 @@ async function returnData(id, port) {
     }
     
     requestQueue.splice(requestQueue.indexOf(id), 1);
-    userDataCache.set(id, userData);
+
+    // Don't put more than 512 entries in this cache, PLEASE
+    userDataCache.size < 512 && userDataCache.set(id, userData);
 
     port.postMessage({ user: userData });
     userDataUpdated(id, userData);
