@@ -1,19 +1,12 @@
-chrome.runtime.onInstalled.addListener(function() {
-  loadSettings();
-});
+chrome.runtime.onInstalled.addListener(async () => await loadSettings());
 
-function loadSettings() {
-  let xhr = new XMLHttpRequest();
-  xhr.onreadystatechange = function() {
-    if (xhr.readyState === 4) {
-      let response = JSON.parse(xhr.response);
-      chrome.storage.sync.set({
-        colors: response.colors,
-        querystrings: response.querystrings,
-        settings: response.settings
-      });
-    }
-  };
-  xhr.open("GET", chrome.extension.getURL("/res/cfg/config.json"), true);
-  xhr.send();
+async function loadSettings() {
+	const res = await fetch(chrome.extension.getURL("/res/cfg/config.json"));
+	const { colors, querystrings, settings } = await res.json();
+
+	chrome.storage.sync.set({
+		colors: colors,
+		querystrings: querystrings,
+		settings: settings
+	});
 }
