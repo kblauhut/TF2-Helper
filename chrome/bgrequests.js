@@ -134,7 +134,7 @@ function etf2lUserData(id) {
 					(category.includes("6v6 Season") && competitionName.includes("Playoffs"))) &&
 				(clan1.was_in_team == 1 || clan2.was_in_team == 1)
 			) {
-        // :(
+				// :(
 				if (tierName.includes("Prem")) return "etf2l_prem";
 				if (tierName.includes("Division 1")) return "etf2l_div1";
 				if (tierName.includes("High")) return "etf2l_div1";
