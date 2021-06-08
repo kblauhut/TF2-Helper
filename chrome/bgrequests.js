@@ -85,7 +85,7 @@ function etf2lUserData(id) {
 		const resultURL = `http://api.etf2l.org/player/${id}/results/1?since=0`;
 
 		/*
-			Honestly, I don't know why I need to return null here...
+			Honestly, I don't know why I need to return resolve here...
 			For some reason, without `return resolve()` I will get a runtime TypeError.
 			No idea, and I really hope that's just me not understanding promises.
 		*/
