@@ -151,7 +151,7 @@ function etf2lUserData(id) {
 
 function rglUserData(id) {
 	return new Promise(async resolve => {
-		console.log("Getting RGL data for " + id);
+		console.log(`Getting RGL data for ${id}`);
 
 		const apiUrl = `https://rgl.payload.tf/api/v1/profiles/${id}/experience?formats=sixes&disableCache=true`;
 		const req = await fetch(apiUrl);
