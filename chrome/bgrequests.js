@@ -101,10 +101,10 @@ function etf2lUserData(id) {
 		const division = getDiv(resultJSON);
 
 		resolve({
-			id: id,
 			league: "etf2l",
 			registered: true,
-			data: { name, team, division, etf2lID }
+			data: { name, team, division, etf2lID },
+			id
 		});
 	});
 
@@ -163,24 +163,18 @@ function rglUserData(id) {
 		const apiUrl = `https://rgl.payload.tf/api/v1/profiles/${id}/experience?formats=sixes&disableCache=true`;
 		const req = await fetch(apiUrl);
 
-		if (!req.ok) {
-			userData = { id, registered: false };
-			resolve(userData);
-			return;
-		}
+		if (!req.ok) return resolve({ id, registered: false });
 
 		const { data: userJSON } = await req.json();
 		const name = userJSON.name;
 		const division = getDiv(userJSON);
 
-		userData = {
-			id: id,
+		resolve({
 			league: "rgl",
-			data: { name: name, division: division },
-			registered: true
-		};
-
-		resolve(userData);
+			registered: true,
+			data: { name, division },
+			id
+		});
 	});
 
 	function getDiv(playerObj) {
