@@ -163,24 +163,18 @@ function rglUserData(id) {
 		const apiUrl = `https://rgl.payload.tf/api/v1/profiles/${id}/experience?formats=sixes&disableCache=true`;
 		const req = await fetch(apiUrl);
 
-		if (!req.ok) {
-			userData = { id, registered: false };
-			resolve(userData);
-			return;
-		}
+		if (!req.ok) return resolve({ id, registered: false });
 
 		const { data: userJSON } = await req.json();
 		const name = userJSON.name;
 		const division = getDiv(userJSON);
 
-		userData = {
+		resolve({
 			id: id,
 			league: "rgl",
-			data: { name: name, division: division },
-			registered: true
-		};
-
-		resolve(userData);
+			registered: true,
+			data: { name, division }
+		});
 	});
 
 	function getDiv(playerObj) {
