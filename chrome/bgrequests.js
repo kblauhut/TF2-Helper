@@ -20,7 +20,7 @@ async function returnData(id, port) {
 
 	if (isCached) return port.postMessage({ user: userDataCache.get(id) });
 
-	if (requestQueue.indexOf(id) != -1) openRequests.push({ id: id, port: port });
+	if (requestQueue.indexOf(id) !== -1) openRequests.push({ id: id, port: port });
 	else {
 		requestQueue.push(id);
 
@@ -34,14 +34,14 @@ async function returnData(id, port) {
 
 			case "na": {
 				userData = await rglUserData(id);
-				if (userData.registered == false || userData.data.division == null)
+				if (userData.registered === false || userData.data.division === null)
 					userData = await etf2lUserData(id);
 				break;
 			}
 
 			default: {
 				userData = await rglUserData(id);
-				if (userData.registered == false || userData.data.division == null)
+				if (userData.registered === false || userData.data.division === null)
 					userData = await etf2lUserData(id);
 				break;
 			}
@@ -59,7 +59,7 @@ async function returnData(id, port) {
 
 function userDataUpdated(id, userData) {
 	for (let i = 0; i < openRequests.length; i++) {
-		if (openRequests[i].id == id) {
+		if (openRequests[i].id === id) {
 			let port = openRequests[i].port;
 			port.postMessage({ user: userData });
 			openRequests.splice(i, 1);
@@ -110,8 +110,8 @@ function etf2lUserData(id) {
 			const category = resultJSON.results[i].competition.category;
 			const tier = resultJSON.results[i].division.tier;
 
-			if (category == "6v6 Season" && tier != null) {
-				return clan1.was_in_team == 1 ? clan1.name : clan2.name;
+			if (category === "6v6 Season" && tier != null) {
+				return clan1.was_in_team === 1 ? clan1.name : clan2.name;
 			}
 		}
 	}
@@ -132,7 +132,7 @@ function etf2lUserData(id) {
 				tier &&
 				(category.includes("6v6 Season") ||
 					(category.includes("6v6 Season") && competitionName.includes("Playoffs"))) &&
-				(clan1.was_in_team == 1 || clan2.was_in_team == 1)
+				(clan1.was_in_team === 1 || clan2.was_in_team === 1)
 			) {
 				// :(
 				if (tierName.includes("Prem")) return "etf2l_prem";
