@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "TF2 Helper",
   "description": "Some useful tools for competitive TF2 players.",
-  "version": "0.96",
+  "version": "1.0.0",
   "permissions": [
     "storage",
     "http://api.etf2l.org/*",

@@ -11,7 +11,11 @@ togglebutton.href = chrome.extension.getURL("res/css/togglebutton.css");
 document.head.appendChild(togglebutton);
 
 window.onload = function () {
-  let divTagToggle = document.getElementById("divTagToggle");
+  const divTagToggle = document.getElementById("divTagToggle");
+  const versionElement = document.getElementById("version");
+  
+  const version = chrome.runtime.getManifest().version;
+  $(versionElement).text(version);
 
   let settings = getSettings();
 
