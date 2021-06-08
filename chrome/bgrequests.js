@@ -72,6 +72,9 @@ async function request(url) {
 	const headers = new Headers();
 	headers.append("Accept", "application/json");
 	const response = await fetch(url, { headers });
+
+	if (!response.ok) return null;
+
 	return await response.json();
 }
 
@@ -81,12 +84,16 @@ function etf2lUserData(id) {
 		const userURL = `http://api.etf2l.org/player/${id}`;
 		const resultURL = `http://api.etf2l.org/player/${id}/results/1?since=0`;
 
+		/*
+			Honestly, I don't know why I need to return null here...
+			For some reason, without `return resolve()` I will get a runtime TypeError.
+			No idea, and I really hope that's just me not understanding promises.
+		*/
 		const userJSON = await request(userURL);
+		if (userJSON === null) return resolve({ registered: false, id });
 
-		if (userJSON?.status?.code !== 200) resolve({ id: id, registered: false });
-
-		let resultJSON = await request(resultURL);
-		if (resultJSON?.status?.code !== 200) resolve({ id: id, registered: false });
+		const resultJSON = await request(resultURL);
+		if (resultJSON === null) return resolve({ registered: false, id });
 
 		const name = userJSON.player.name;
 		const etf2lID = userJSON.player.id;
